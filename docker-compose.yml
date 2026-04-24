@@ -10,11 +10,8 @@ services:
       - "25565-25575:25565-25575" # Minecraft Java (TCP)
       - "19132-19142:19132-19142/udp" # Minecraft Bedrock (UDP)
     volumes:
-      - ./crafty_data/db:/crafty_db
-      - ./crafty_data/web:/crafty_web
-      - ./crafty_data/backups:/crafty_backups
-      - ./crafty_data/servers:/minecraft_servers
-    deploy:
-      resources:
-        limits:
-          memory: 3.5G
+      - ./crafty_data/config:/crafty/app/config
+      - ./crafty_data/servers:/crafty/servers
+      - ./crafty_data/backups:/crafty/backups
+      - ./crafty_data/logs:/crafty/logs
+      - ./crafty_data/import:/crafty/import
