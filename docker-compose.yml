@@ -6,11 +6,14 @@ services:
     environment:
       - TZ=Asia/Manila
     ports:
-      # Web UI: only reachable via the VPS's Tailscale IP (set TS_IP in .env, e.g. 100.x.y.z)
-      - "${TS_IP:-127.0.0.1}:8443:8443"
-      # Minecraft: also tailscale-only. Public access goes through playit (below), not open ports.
-      - "${TS_IP:-127.0.0.1}:25565-25575:25565-25575"
-      - "${TS_IP:-127.0.0.1}:19132-19142:19132-19142/udp"
+      # Web UI + Minecraft on the Tailscale IP (TS_IP in .env) and on localhost.
+      # Public access goes through playit (below), not open ports.
+      - "${TS_IP:?set TS_IP in .env}:8443:8443"
+      - "127.0.0.1:8443:8443"
+      - "${TS_IP}:25565-25575:25565-25575"
+      - "127.0.0.1:25565-25575:25565-25575"
+      - "${TS_IP}:19132-19142:19132-19142/udp"
+      - "127.0.0.1:19132-19142:19132-19142/udp"
     volumes:
       - ./crafty_data/config:/crafty/app/config
       - ./crafty_data/servers:/crafty/servers

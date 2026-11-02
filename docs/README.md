@@ -57,7 +57,7 @@ Back up `crafty_data/` (or use Crafty's built-in backups in `crafty_data/backups
 
 ## Notes
 
-- Ports bind to `TS_IP` only, so nothing is exposed on the VPS's public IP. Playit connects outbound.
-- Without `TS_IP` set, ports bind to `127.0.0.1`.
+- Ports bind to `TS_IP` and `127.0.0.1` only, so nothing is exposed on the VPS's public IP. Playit connects outbound.
+- `TS_IP` is required (compose errors if unset). Ports are also bound on `127.0.0.1`.
 - Timezone is `Asia/Manila` (compose `TZ`).
 - Verify the playit image tag in `docker-compose.yml` exists before first use.
