@@ -22,11 +22,13 @@ services:
       - ./crafty_data/import:/crafty/import
 
   # Optional: public access via playit.gg. Start with: docker compose --profile playit up -d
-  # In the playit dashboard, point the tunnel at local address `crafty:25565`.
+  # Host network: the dashboard's Local IP field only accepts IPs, so use 127.0.0.1
+  # (Crafty publishes its ports on the host's loopback).
   playit:
     image: ghcr.io/playit-cloud/playit-agent:0.15
     profiles: [playit]
     restart: unless-stopped
+    network_mode: host
     environment:
       - SECRET_KEY=${PLAYIT_SECRET}
     depends_on: [crafty]

@@ -24,8 +24,8 @@ Prereqs: Docker + Compose, Tailscale installed and logged in on the VPS, a playi
    docker compose up -d                      # Crafty only (Tailscale access)
    ```
 3. In the playit dashboard add tunnels:
-   - TCP (Java) -> `crafty:25565`
-   - UDP (Bedrock) -> `crafty:19132`
+   - TCP (Java) -> `127.0.0.1:25565`
+   - UDP (Bedrock) -> `127.0.0.1:19132`
 4. Open `https://<TS_IP>:8443` (accept the self-signed cert warning).
 
 ## First login
