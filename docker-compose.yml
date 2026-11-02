@@ -6,12 +6,24 @@ services:
     environment:
       - TZ=Asia/Manila
     ports:
-      - "8443:8443" # Web UI
-      - "25565-25575:25565-25575" # Minecraft Java (TCP)
-      - "19132-19142:19132-19142/udp" # Minecraft Bedrock (UDP)
+      # Web UI: only reachable via the VPS's Tailscale IP (set TS_IP in .env, e.g. 100.x.y.z)
+      - "${TS_IP:-127.0.0.1}:8443:8443"
+      # Minecraft: also tailscale-only. Public access goes through playit (below), not open ports.
+      - "${TS_IP:-127.0.0.1}:25565-25575:25565-25575"
+      - "${TS_IP:-127.0.0.1}:19132-19142:19132-19142/udp"
     volumes:
       - ./crafty_data/config:/crafty/app/config
       - ./crafty_data/servers:/crafty/servers
       - ./crafty_data/backups:/crafty/backups
       - ./crafty_data/logs:/crafty/logs
       - ./crafty_data/import:/crafty/import
+
+  # Optional: public access via playit.gg. Start with: docker compose --profile playit up -d
+  # In the playit dashboard, point the tunnel at local address `crafty:25565`.
+  playit:
+    image: ghcr.io/playit-cloud/playit-agent:0.15
+    profiles: [playit]
+    restart: unless-stopped
+    environment:
+      - SECRET_KEY=${PLAYIT_SECRET}
+    depends_on: [crafty]
