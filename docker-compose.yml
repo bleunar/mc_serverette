@@ -14,6 +14,7 @@ services:
       - "127.0.0.1:25565-25575:25565-25575"
       - "${TS_IP}:19132-19142:19132-19142/udp"
       - "127.0.0.1:19132-19142:19132-19142/udp"
+      - "6769:25565/tcp"
     volumes:
       - ./crafty_data/config:/crafty/app/config
       - ./crafty_data/servers:/crafty/servers
